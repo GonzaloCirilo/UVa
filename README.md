@@ -1,2 +1,3 @@
 # UVa
-Algunos problemas de UVa Online Judge
+Solutions from UVa Online Judge
+feel free to colaborate.
