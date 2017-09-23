@@ -1,9 +1,3 @@
-// 929_NumberMaze.cpp : main project file.
-
-
-
-#include "stdafx.h"
-
 #include <stdio.h>
 #include <queue>
 #include <vector>
