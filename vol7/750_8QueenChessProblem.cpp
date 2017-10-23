@@ -1,6 +1,3 @@
-// 750_8QueenChessProblem.cpp : main project file.
-
-#include "stdafx.h"
 #include <vector>
 #include <math.h>
 #include <iostream>
