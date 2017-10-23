@@ -1,5 +1,4 @@
-// 990-DivingGold.cpp : main project file.
-#include "stdafx.h"
+
 #include <stdio.h>
 #include <vector>
 #include <queue>
