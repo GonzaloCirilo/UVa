@@ -8,9 +8,9 @@ int nQuestions;
 typedef vector<char>Vc;
 typedef vector<int>Vi;
 typedef vector<Vi>G;
-G grafo, graforev;
+G graph, revgraph;
 char u1, u2, u3, u4, u5, v;
-stack<int>pila; int cont;
+stack<int>pile; int cont;
 vector<vector<char>>resp;
 vector<bool>visited;
 struct OrderFirst
@@ -20,25 +20,24 @@ struct OrderFirst
 void DFS(int nodo)
 {
 	visited[nodo] = true;
-	for (int i = 0; i < grafo[nodo].size(); i++)
+	for (int i = 0; i < graph[nodo].size(); i++)
 	{
-		int adyacente = grafo[nodo][i];
-		if (visited[adyacente] == false)
-			DFS(adyacente);
-		adyacente = 0;
+		int ad = graph[nodo][i];
+		if (visited[ad] == false)
+			DFS(ad);
+		ad = 0;
 	}
-	pila.push(nodo);
+	pile.push(nodo);
 }
 void DFS_rev(int nodo)
 {
 	visited[nodo] = true;
 	resp[cont].push_back((char)(nodo + 65));
-	//printf("%c ", (char)nodo + 65);
-	for (int i = 0; i < graforev[nodo].size(); i++)
+	for (int i = 0; i < revgraph[nodo].size(); i++)
 	{
-		int adyacente = graforev[nodo][i];
-		if (visited[adyacente] == false)
-			DFS_rev(adyacente);
+		int ad = revgraph[nodo][i];
+		if (visited[ad] == false)
+			DFS_rev(ad);
 	}
 }
 int main()
@@ -52,16 +51,16 @@ int main()
 			break;
 		}
 		if (c > 0)printf("\n");
-		grafo = G(27);
-		graforev = G(27);
+		graph = G(27);
+		revgraph = G(27);
 		for (int i = 0; i < nQuestions; i++) {
 			scanf(" %c %c %c %c %c %c", &u1, &u2, &u3, &u4, &u5, &v);
 			int a = (int)v - 65;
 			vector<int>options = { (int)u1 - 65,(int)u2 - 65,(int)u3 - 65,(int)u4 - 65,(int)u5 - 65 };
 			sort(options.begin(), options.end());
 			for (int j = 0; j<options.size(); j++) {
-				grafo[a].push_back(options[j]);
-				graforev[options[j]].push_back(a);
+				graph[a].push_back(options[j]);
+				revgraph[options[j]].push_back(a);
 				visited[options[j]] = false;
 			}
 		}
@@ -73,11 +72,10 @@ int main()
 		resp = vector<vector<char>>(27);
 		priority_queue<Vc, vector<Vc>, OrderFirst>pq;
 		cont = 0;
-		while (!pila.empty()) {
-			int nodo = pila.top(); pila.pop();
+		while (!pile.empty()) {
+			int nodo = pile.top(); pile.pop();
 			if (visited[nodo] != true) {
 				DFS_rev(nodo);
-				//printf("\n");
 				sort(resp[cont].begin(), resp[cont].end());
 				pq.push(resp[cont]);
 				cont++;
@@ -86,7 +84,7 @@ int main()
 		while (!pq.empty()) {
 			Vc aux = pq.top(); pq.pop();
 			for (int i = 0; i < aux.size(); i++) {
-				i==0?printf("%c",aux[i]):printf(" %c", aux[i]);
+				i == 0 ? printf("%c", aux[i]) : printf(" %c", aux[i]);
 			}
 			printf("\n");
 		}
@@ -94,4 +92,3 @@ int main()
 	}
 	return 0;
 }
-
