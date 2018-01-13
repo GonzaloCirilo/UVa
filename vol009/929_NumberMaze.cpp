@@ -6,11 +6,11 @@ using namespace std;
 typedef pair<int, int>ii;
 typedef pair<int, ii>iii;
 priority_queue<iii, vector<iii>, greater<iii>>pq;
-vector<vector<int>> distancias;
+vector<vector<int>> distances;
 vector<vector<int>> matrix;
 int n, m;
-vector<ii>movimientos = { {0,1},{0,-1},{1,0},{-1,0} };
-bool valido(int x, int y) {
+vector<ii>moves = { { 0,1 },{ 0,-1 },{ 1,0 },{ -1,0 } };
+bool valid(int x, int y) {
 	return (x >= 0 && x < m) && (y >= 0 && y < n);
 }
 int main()
@@ -19,7 +19,7 @@ int main()
 	scanf("%d", &cases);
 	for (int c = 0; c < cases; c++) {
 		scanf("%d\n%d", &n, &m);
-		distancias = vector<vector<int>>(n, vector<int>(m, -1));
+		distances = vector<vector<int>>(n, vector<int>(m, -1));
 		matrix = vector<vector<int>>(n, vector<int>(m));
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
@@ -27,22 +27,22 @@ int main()
 			}
 		}
 
-		distancias[0][0] = matrix[0][0];
+		distances[0][0] = matrix[0][0];
 		pq.push({ matrix[0][0],{ 0,0 } });
 		while (!pq.empty()) {
-			ii nodo = pq.top().second;
-			int peso = pq.top().first;
+			ii node = pq.top().second;
+			int wnode = pq.top().first;
 			pq.pop();
-			ii adyacente;
-			if (distancias[nodo.first][nodo.second] >= peso) {
-				for (int i = 0; i < movimientos.size(); i++) {
-					adyacente = { nodo.first + movimientos[i].second,nodo.second + movimientos[i].first };
-					if (valido(adyacente.second, adyacente.first)) {
-						int pesoady = matrix[adyacente.first][adyacente.second];
-						int posiblepeso = peso + pesoady;
-						if (distancias[adyacente.first][adyacente.second] == -1 || distancias[adyacente.first][adyacente.second] > posiblepeso) {
-							distancias[adyacente.first][adyacente.second] = posiblepeso;
-							pq.push({ posiblepeso,adyacente });
+			ii ad;
+			if (distances[node.first][node.second] >= wnode) {
+				for (int i = 0; i < moves.size(); i++) {
+					ad = { node.first + moves[i].second,node.second + moves[i].first };
+					if (valid(ad.second, ad.first)) {
+						int wad = matrix[ad.first][ad.second];
+						int newweight = wnode + wad;
+						if (distances[ad.first][ad.second] == -1 || distances[ad.first][ad.second] > newweight) {
+							distances[ad.first][ad.second] = newweight;
+							pq.push({ newweight,ad });
 						}
 					}
 				}
@@ -50,9 +50,7 @@ int main()
 		}
 
 
-		printf("%d\n", distancias[n - 1][m - 1]);
+		printf("%d\n", distances[n - 1][m - 1]);
 	}
 	return 0;
 }
-
-
