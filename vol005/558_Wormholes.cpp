@@ -10,15 +10,15 @@ vector<int>distances;
 int main()
 {
 	int cases;
-	scanf("%distances", &cases);
+	scanf("%d", &cases);
 	for (int c = 0; c < cases; c++) {
 		int n, m;
-		scanf("%distances %distances", &n, &m);
+		scanf("%d %d", &n, &m);
 		graph = vector<vii>(n);
 		distances = vector<int>(n, -1);
 		for (int j = 0; j < m; j++) {
 			int u, v, w;
-			scanf("%distances %distances %distances", &u, &v, &w);
+			scanf("%d %d %d", &u, &v, &w);
 			graph[u].push_back({ v,w });
 		}
 		queue<ii>q;
