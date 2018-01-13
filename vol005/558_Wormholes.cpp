@@ -1,6 +1,3 @@
-// 558_Wormholes.cpp : main project file.
-
-#include "stdafx.h"
 #include <stdio.h>
 #include <queue>
 #include <vector>
@@ -8,45 +5,45 @@ using namespace std;
 typedef pair<int, int>ii;
 typedef vector<ii> vii;
 typedef vector<vii>Gi;
-Gi grafo;
-vector<int>distancias;
+Gi graph;
+vector<int>distances;
 int main()
 {
 	int cases;
-	scanf("%d", &cases);
+	scanf("%distances", &cases);
 	for (int c = 0; c < cases; c++) {
 		int n, m;
-		scanf("%d %d", &n, &m);
-		grafo = vector<vii>(n);
-		distancias = vector<int>(n,-1);
+		scanf("%distances %distances", &n, &m);
+		graph = vector<vii>(n);
+		distances = vector<int>(n, -1);
 		for (int j = 0; j < m; j++) {
 			int u, v, w;
-			scanf("%d %d %d", &u, &v, &w);
-			grafo[u].push_back({ v,w });
+			scanf("%distances %distances %distances", &u, &v, &w);
+			graph[u].push_back({ v,w });
 		}
-		queue<ii>cola;
-		cola.push({ 0,0 });
-		distancias[0] = 0;
+		queue<ii>q;
+		q.push({ 0,0 });
+		distances[0] = 0;
 		int cont = 0;
-		while (!cola.empty() && cont <= m) {
-			int nodo = cola.front().first;
-			int peso = cola.front().second;
-			cola.pop();
-			if (peso <= distancias[nodo]) {
-				for (int i = 0; i < grafo[nodo].size(); i++) {
-					int adyacente = grafo[nodo][i].first;
-					int pesoad = grafo[nodo][i].second;
-					int posiblepeso = peso + pesoad;
-					if (distancias[adyacente] == -1 || posiblepeso < distancias[adyacente]) {
-						distancias[adyacente] = posiblepeso;
-						cola.push({ adyacente,posiblepeso });
+		while (!q.empty() && cont <= m) {
+			int node = q.front().first;
+			int wnode = q.front().second;
+			q.pop();
+			if (wnode <= distances[node]) {
+				for (int i = 0; i < graph[node].size(); i++) {
+					int ad = graph[node][i].first;
+					int wad = graph[node][i].second;
+					int newweight = wnode + wad;
+					if (distances[ad] == -1 || newweight < distances[ad]) {
+						distances[ad] = newweight;
+						q.push({ ad,newweight });
 						cont++;
 					}
-					
+
 				}
 			}
 		}
-		if (cola.empty())printf("not possible\n"); else printf("possible\n");
+		if (q.empty())printf("not possible\n"); else printf("possible\n");
 	}
 	return 0;
 }
