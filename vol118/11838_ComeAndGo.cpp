@@ -7,79 +7,74 @@ typedef vector<int> Vi;
 typedef vector<Vi> Gi;
 typedef stack<int> Si;
 int n, m, v, w, p;
-Gi grafo, graforev;
-Vb visitados, visitadorev;
-Si pila;
-Si pila_rev;
-void DFS(int nodo)
+Gi graph, revgraph;
+Vb visited, revvisited;
+Si stacks;
+Si revstacks;
+void DFS(int node)
 {
-	visitados[nodo] = true;
-	for (int i = 0; i < grafo[nodo].size(); i++)
+	visited[node] = true;
+	for (int i = 0; i < graph[node].size(); i++)
 	{
-		int adyacente = grafo[nodo][i];
-		if (visitados[adyacente] == false)
-			DFS(adyacente);
-		adyacente = 0;
+		int ad = graph[node][i];
+		if (visited[ad] == false)
+			DFS(ad);
+		ad = 0;
 	}
-	pila.push(nodo);
+	stacks.push(node);
 }
-void DFSRev(int nodo)
+void DFSRev(int node)
 {
-	visitados[nodo] = true;
-
-	for (int i = 0; i < graforev[nodo].size(); i++)
+	visited[node] = true;
+	for (int i = 0; i < revgraph[node].size(); i++)
 	{
-		int adyacente = graforev[nodo][i];
-		if (visitados[adyacente] == false)
-			DFSRev(adyacente);
+		int ad = revgraph[node][i];
+		if (visited[ad] == false)
+			DFSRev(ad);
 	}
-	pila_rev.push(nodo);
+	revstacks.push(node);
 }
 int main()
 {
 	vector<int>res;
 	while (true) {
 		scanf("%d %d", &n, &m);
-		grafo = Gi(n);
-		graforev = Gi(n);
-		visitados = Vb(n, false);
+		graph = Gi(n);
+		revgraph = Gi(n);
+		visited = Vb(n, false);
 		if (n == 0 && m == 0) {
 			break;
 		}
 		for (int i = 0; i < m; i++) {
 			scanf("%d %d %d", &v, &w, &p);
 			v--; w--;
-			grafo[v].push_back(w);
-			graforev[w].push_back(v);
+			graph[v].push_back(w);
+			revgraph[w].push_back(v);
 			if (p == 2) {
-				grafo[w].push_back(v);
-				graforev[v].push_back(w);
+				graph[w].push_back(v);
+				revgraph[v].push_back(w);
 			}
 		}
 
 		for (int i = 0; i < n; i++) {
-			if (!visitados[i])
+			if (!visited[i])
 				DFS(i);
 		}
-
-		visitados = Vb(n, false);
-		int componentes = 0;
-
-		while (!pila.empty()) {
-			int nodo = pila.top(); pila.pop();
-			if (visitados[nodo] != true) {
-				componentes++;
-				DFSRev(nodo);
+		visited = Vb(n, false);
+		int components = 0;
+		while (!stacks.empty()) {
+			int node = stacks.top(); stacks.pop();
+			if (visited[node] != true) {
+				components++;
+				DFSRev(node);
 			}
 		}
-		if (componentes == 1) {
+		if (components == 1) {
 			printf("%d\n", 1);
 		}
 		else {
 			printf("%d\n", 0);
 		}
-
 	}
 	return 0;
 }
-
