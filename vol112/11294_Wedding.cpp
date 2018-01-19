@@ -3,7 +3,7 @@
 #include <stack>
 using namespace std;
 typedef vector<int> vi;
-typedef vector<pair<int, int>>vii;
+typedef vector<pair<int, int> >vii;
 typedef vector<vi> G;
 vi visited; vii answer;
 G graph, revgraph;
