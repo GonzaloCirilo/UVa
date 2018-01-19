@@ -20,7 +20,7 @@ void LIS() {
 			s = 0, e = len;
 			while (s <= e) {
 				m = (s + e) / 2;
-				if (se[a[m]] < se[i] && se[i] <= se[a[m + 1]] && m < len) {
+				if (m < len && se[a[m]] < se[i] && se[i] <= se[a[m + 1]]) {
 					index = m + 1;
 					break;
 				} else if (se[a[m]] < se[i]) {
