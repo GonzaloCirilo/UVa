@@ -6,67 +6,63 @@ using namespace std;
 typedef vector<int> Vi;
 typedef vector<Vi> Gi;
 typedef vector<bool>Vb;
-Vb visitados;
-int cases;
-int ndominoes, lines;
-int u, v;
-Gi grafo;
-stack<int>snodo,pila;
+Vb visited;
+int cases, ndominoes, lines, u, v;
+Gi graph;
+stack<int>snode, pile;
 void DFS() {
-	while (!snodo.empty()) {
-		int nodo = snodo.top();
-		snodo.pop();
-		if (visitados[nodo]) {
-			pila.push(nodo);
+	while (!snode.empty()) {
+		int node = snode.top();
+		snode.pop();
+		if (visited[node]) {
+			pile.push(node);
 			continue;
 		}
-		visitados[nodo] = true;
-		snodo.push(nodo);
-		for (int i = 0; i < grafo[nodo].size(); i++) {
-			int adayacente = grafo[nodo][i];
-			if (visitados[adayacente] == false) {
+		visited[node] = true;
+		snode.push(node);
+		for (int i = 0; i < graph[node].size(); i++) {
+			int ad = graph[node][i];
+			if (visited[ad] == false) {
 
-				snodo.push(adayacente);
+				snode.push(ad);
 			}
-			adayacente = 0;
+			ad = 0;
 		}
 	}
 }
-
-
 int main()
 {
 	scanf("%d", &cases);
 	for (int i = 0; i < cases; i++) {
 		scanf("%d %d", &ndominoes, &lines);
 
-		grafo = Gi(ndominoes);
+		graph = Gi(ndominoes);
 		for (int j = 0; j < lines; j++) {
 
 			scanf("%d %d", &u, &v);
 			u--; v--;
-			grafo[u].push_back(v);
+			graph[u].push_back(v);
 		}
-		visitados = Vb(ndominoes, false);
-		int componentes = 0;
+		visited = Vb(ndominoes, false);
+		int components = 0;
 		for (int j = 0; j < ndominoes; j++) {
-			if (!visitados[j]) {
-				snodo.push(j);
+			if (!visited[j]) {
+				snode.push(j);
 				DFS();
 			}
-			
+
 		}
-		visitados = Vb(ndominoes, false);
-		//En este caso se varia el algoritmo del Kosaraju aplicando el DFS por segunda vez al grafo original y no al reverso, en el orden que terminaron
-		while (!pila.empty()) {
-			int nodo = pila.top(); pila.pop();
-			if (visitados[nodo] != true) {
-				componentes++;
-				snodo.push(nodo);
+		visited = Vb(ndominoes, false);
+		//In this case the second DFS is applied to the original graph
+		while (!pile.empty()) {
+			int node = pile.top(); pile.pop();
+			if (visited[node] != true) {
+				components++;
+				snode.push(node);
 				DFS();
 			}
 		}
-		printf("%d\n", componentes);
+		printf("%d\n", components);
 	}
-    return 0;
+	return 0;
 }
