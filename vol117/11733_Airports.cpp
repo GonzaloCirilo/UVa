@@ -5,15 +5,13 @@
 using namespace std;
 typedef pair<int,int> ii;
 typedef pair<int, ii> iii;
-vector<int> pset;
+vector<int> pset; int na;
 void init(int n){
-	pset = vector<int>(n);
-	for(int i = 0; i < n; i++){
-		pset[i] = i;
-	}
+	pset = vector<int>(n,-1);
+	na = n;
 }
 int findset(int p) {
-	if (p == pset[p])
+	if (-1 == pset[p])
 		return p;
 	return pset[p] = findset(pset[p]);
 }
@@ -21,8 +19,10 @@ bool isSameSet(int a,int b) {
 	return findset(a) == findset(b);
 }
 void unionSet(int a, int b) {
-	if (!isSameSet(a, b))
+	if (!isSameSet(a, b)){
 		pset[findset(a)] = findset(b);
+		na--;
+	}
 }
 int main(){
 	int ta, n, m, a, u, v, c;
@@ -44,14 +44,7 @@ int main(){
 			}
 			pq.pop();
 		}
-		int na = 0;
-		for(int i = 0; i < pset.size(); i++){
-			if(pset[i] == i){
-				mst += a;
-				na++;
-			}
-		}
-		printf("Case #%d: %d %d\n", t+1, mst, na);
+		printf("Case #%d: %d %d\n", t+1, mst + (a * na), na);
 	}
 	return 0;
 }
