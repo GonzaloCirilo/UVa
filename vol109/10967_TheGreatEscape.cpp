@@ -23,7 +23,7 @@ bool checkMap(int x, int y, int dx, int dy) {
 int main()
 {
 	vector<int>costD;
-	vector<ii>closed, moves = { {1,0},{0,1},{-1,0},{0,-1} };
+	vector<ii> moves = { {1,0},{0,1},{-1,0},{0,-1} };
 	map<char, int>movdoor;
 	map<pair<int, int>, int>kdoor;
 	movdoor['W'] = 0; movdoor['N'] = 270; movdoor['S'] = 90; movdoor['E'] = 180;
