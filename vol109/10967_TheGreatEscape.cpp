@@ -9,7 +9,7 @@ double PI = 3.14159265;
 using namespace std;
 typedef pair<int, int>ii;
 typedef pair<int, ii>iii;
-vector<vector<int>>maps,mapG;
+vector<vector<int>>maps,mapG,visited;
 vector<vector<ii>>movedoors;
 const int inf = 100000;
 ii start, ending;
@@ -36,6 +36,7 @@ int main()
 		costD.clear();
 		scanf("%d %d", &n, &m);
 		mapG = vector<vector<int>>(n, vector<int>(m, 0));
+		visited = vector<vector<int>>(n, vector<int>(m, 0));
 		movedoors = vector<vector<ii>>(n, vector<ii>(m, { -1,-1 }));
 		int cont = 0;
 		char token;
@@ -86,14 +87,14 @@ int main()
 							}
 						}
 						int F = G + Manhattan(newx, newy);
-						if ((maps[newy][newx] == -1 || maps[newy][newx] > F+et) && find(closed.begin(), closed.end(), ii(newx, newy)) == closed.end()) {
+						if ((maps[newy][newx] == -1 || maps[newy][newx] > F+et) && !visited[newy][newx]) {
 							maps[newy][newx] = F/*-Manhattan(newx, newy)*/+et;
 							mapG[newy][newx] = G+et;
 							open.push({ maps[newy][newx],{ newx,newy } });
 						}
 					}
 			}
-			closed.push_back({ aux.second.first,aux.second.second });
+			visited[aux.second.second][aux.second.first]=1;
 		}
 		if (start == ending)
 			printf("0\n");
