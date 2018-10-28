@@ -3,15 +3,12 @@
 using namespace std;
 vector<int>pset, nele;
 void init(int n) {
-	pset = vector<int>(n);
+	pset = vector<int>(n, -1);
 	nele = vector<int>(n, 1);
-	for (int i = 0; i < pset.size(); i++) {
-		pset[i] = i;
-	}
 }
 int findset(int nodo) {
-	if (nodo == pset[nodo])
-		return pset[nodo];
+	if (-1 == pset[nodo])
+		return nodo;
 	return pset[nodo] = findset(pset[nodo]);
 }
 

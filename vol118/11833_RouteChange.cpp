@@ -11,9 +11,7 @@ int main(){
 	int n,m,c,k;
 	vector<int>actoll;
 	G grafo;
-	while(true){
-		scanf("%d %d %d %d", &n, &m, &c, &k);
-		if(n==0 && m==0 && c==0 && k==0)break;
+	while(scanf("%d %d %d %d", &n, &m, &c, &k) != EOF && n && m && c && k){
 		grafo = G(n);
 		for(int i=0; i<m; i++){
 			int u, v, p;

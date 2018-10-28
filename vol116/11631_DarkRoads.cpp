@@ -7,21 +7,18 @@ typedef pair<int, pair<int, int>> iii;
 int m, n, x, y, z;
 vector<int>pset;
 void init() {
-	pset = vector<int>(m);
-	for (int i = 0;i < pset.size();i++) {
-		pset[i] = i;
-	}
+	pset = vector<int>(m, -1);
 }
 int findset(int nodo) {
-	if (nodo == pset[nodo])
-		return pset[nodo];
+	if (-1 == pset[nodo])
+		return nodo;
 	return pset[nodo] = findset(pset[nodo]);
 }
 bool isSameSet(int a, int b) {
 	return findset(a) == findset(b);
 }
 void unionset(int a, int b) {
-	if(!isSameSet(a,b))
+	if (!isSameSet(a, b))
 		pset[findset(a)] = findset(b);
 }
 priority_queue<iii, vector<iii>, greater<iii>>pq;
@@ -32,7 +29,7 @@ int main()
 		if (m == 0 && n == 0)break;
 		while (!pq.empty())pq.pop();
 		int sumt = 0;
-		for (int i = 0;i < n;i++) {
+		for (int i = 0; i < n; i++) {
 			scanf("%d %d %d", &x, &y, &z);
 			pq.push({ z,{x,y} });
 			sumt += z;
@@ -52,5 +49,5 @@ int main()
 		}
 		printf("%d\n", (sumt - mst));
 	}
-    return 0;
+	return 0;
 }

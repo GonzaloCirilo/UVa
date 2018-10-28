@@ -55,7 +55,7 @@ int main() {
 					}
 				}
 			}
-			visited[pos.second][pos.first] = 1;
+			visited[pos.second][pos.first] = 1;//put an if after the if break clause too se if timer goes down
 		}
 		printf("%d\n", mapG[d.second][d.first]);
 	}

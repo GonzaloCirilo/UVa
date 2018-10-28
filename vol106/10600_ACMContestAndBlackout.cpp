@@ -8,13 +8,10 @@ typedef pair<int, ii>iii;
 vector<int>pset;
 int n;
 void init() {
-	pset = vector<int>(n);
-	for (int i = 0; i < n; i++) {
-		pset[i] = i;
-	}
+	pset = vector<int>(n, -1);
 }
 int findset(int p) {
-	if (p == pset[p]) {
+	if (-1 == pset[p]) {
 		return p;
 	}
 	return pset[p]=findset(pset[p]);

@@ -10,9 +10,6 @@ vector<int>pset;
 vector<pair<int, int>>positions;
 void init() {
 	pset = vector<int>(n);
-	for (int i = 0; i < pset.size(); i++) {
-		pset[i] = i;
-	}
 }
 int findset(int node) {
 	if (node == pset[node])
@@ -38,10 +35,11 @@ int main()
 		init();
 		int cont = 0;
 		priority_queue<iii, vector<iii>, greater<iii>>pq;
-		positions.clear();
+		positions = vector<pair<int, int>>();
 		for (int i = 0; i < n; i++) {
 			scanf("%d %d", &x, &y);
 			positions.push_back({ x,y });
+			pset[i] = i;
 		}
 		for (int u = 0; u < n; u++) {
 			for (int v = 1 + u; v < n; v++) {

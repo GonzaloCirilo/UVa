@@ -9,14 +9,11 @@ typedef pair<double, ii>dii;
 typedef vector<ii> vii;
 vector<int> pset;
 void init(int n) {
-	pset = vector<int>(n);
-	for (int i = 0; i < pset.size(); i++) {
-		pset[i] = i;
-	}
+	pset = vector<int>(n, -1);
 }
 int findset(int nodo) {
-	if (nodo == pset[nodo])
-		return pset[nodo];
+	if (-1 == pset[nodo])
+		return nodo;
 	return pset[nodo] = findset(pset[nodo]);
 }
 bool isSameSet(int a, int b) {

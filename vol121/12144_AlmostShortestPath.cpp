@@ -54,10 +54,7 @@ void Dijkstra(int n, int s) {
 int main()
 {
 	int n, m;
-	while (true) {
-		scanf("%d %d", &n, &m);
-		if (n == 0 && m == 0)break;
-
+	while (scanf("%d %d", &n, &m) != EOF && n && m) {
 		scanf("%d %d", &s, &d);
 		graph = vector<vector<iii>>(n);
 		for (int i = 0; i < m; i++) {

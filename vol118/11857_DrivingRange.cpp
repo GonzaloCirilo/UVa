@@ -7,47 +7,40 @@ typedef pair<int, int>ii;
 typedef pair<int, ii>iii;
 vector<int> pset;
 void init(int n) {
-	pset = vector<int>(n);
-	for (int i = 0; i < pset.size(); i++) {
-		pset[i] = i;
-	}
+	pset = vector<int>(n, -1);
 }
 int findset(int nodo) {
-	if (nodo == pset[nodo])
-		return pset[nodo];
+	if (-1 == pset[nodo])
+		return nodo;
 	return pset[nodo] = findset(pset[nodo]);
 }
 bool isSameSet(int a, int b) {
 	return findset(a) == findset(b);
 }
 void unionset(int a, int b) {
-	if (!isSameSet(a, b))
-		pset[findset(a)] = findset(b);
+	pset[findset(a)] = findset(b);
 }
 int main() {
 	int n, m, u, v, w;
-	while (true) {
-		scanf("%d %d", &n, &m);
+	while (scanf("%d %d", &n, &m) && n && m) {
 		priority_queue<iii, vector<iii>, greater<iii> >pq;
-		priority_queue<int, vector<int>, less<int> > ranges;
-		if (n == 0 && m == 0)
-			break;
 		init(n);
 		for (int mi = 0; mi < m; mi++) {
 			scanf("%d %d %d", &u, &v, &w);
 			pq.push({ w,{ u,v } });
 		}
 		int cont = 0;
+		int ans = 0;
 		while (!pq.empty() && cont != n - 1) {
 			iii aux = pq.top(); pq.pop();
 			if (!isSameSet(aux.second.first, aux.second.second)) {
 				unionset(aux.second.first, aux.second.second);
-				ranges.push(aux.first);
+				ans = aux.first;
 				cont++;
 			}
 		}
 		if (cont == n - 1 && m >= n - 1)
-			printf("%d\n", ranges.top());
+			printf("%d\n", ans);
 		else
 			printf("IMPOSSIBLE\n");
 	}
