@@ -25,9 +25,7 @@ void unionset(int a, int b) {
 int main() {
 	int n, m, i, j;
 	int cases = 1;
-	while (true) {
-		scanf("%d %d", &n, &m);
-		if (n == 0 && m == 0) break;
+	while (scanf("%d %d", &n, &m) && n && m) {
 		init(n);
 		for (int k = 0; k < m; k++) {
 			scanf("%d %d", &i, &j);
