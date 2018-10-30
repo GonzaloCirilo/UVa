@@ -1,90 +1,43 @@
 #include <stdio.h>
-#include <vector>
-#include <stack>
+#include <queue>
 using namespace std;
-typedef pair<int, int> ii;
-typedef vector<int> vi;
-typedef vector<vi> G;
-typedef vector<bool>Vb;
-stack<int>snode, stacks;
-G graph;
-Vb visited;
-void DFS(int n) {
-	snode.push(n);
-	while (!snode.empty()) {
-		int node = snode.top();
-		snode.pop();
-		if (visited[node]) {
-			stacks.push(node);
-			continue;
-		}
-		visited[node] = true;
-		snode.push(node);
-		for (int i = 0; i < graph[node].size(); i++) {
-			int ad = graph[node][i];
-			if (visited[ad] == false)
-				snode.push(ad);
-		}
-	}
-}
-int RevDFS(int n) {//is the same graph since the graph is undirected
-	int ncount = 0;
-	snode.push(n);
-	while (!snode.empty()) {
-		int node = snode.top();
-		snode.pop();
-		if (visited[node]) {
-			ncount++;
-			continue;
-		}
-		visited[node] = true;
-		snode.push(node);
-		for (int i = 0; i < graph[node].size(); i++) {
-			int ad = graph[node][i];
-			if (visited[ad] == false)
-				snode.push(ad);
-		}
-	}
-	return ncount;
+typedef pair<int, int>ii;
+ii moves[9] = { {1,-1},{1,0},{1,1},{0,1},{-1,1},{-1,0},{0,-1},{1,1},{-1,-1} };
+int r, c;
+bool validStar(ii star) {
+	return star.first >= 0 && star.first < r && star.second >= 0 && star.second < c;
 }
 int main() {
-	int r, c, n;
-	char token;
-	vector<ii> moves = { { -1,0 },{ -1,-1 },{ 0,-1 },{-1,1} };
-	G sky = G(101, vi(101));
-	while (scanf("%d %d", &r, &c) && r && c) {
-		n = 0;
-		graph.clear();
+	bool visited[103][103];
+	char token[103][103];
+	queue<ii> q;
+	while (scanf("%d %d\n", &r, &c) && r && c){
+		for (int i = 0; i < r; i++) {
+			scanf("%s", &token[i]);
+			for (int j = 0; j < c; j++) {
+				visited[i][j] = token[i][j] == '.';
+			}
+		}
+		int ans = 0, cont = 0;
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
-				scanf("\n%c", &token);
-				sky[i][j] = -1;
-				if (token == '*') {
-					sky[i][j] = n++;
-					graph.push_back(vi());
-					for (int k = 0; k < 4; k++) {
-						int di = i + moves[k].first, dj = j + moves[k].second;
-						if (di >= 0 && dj >= 0  && dj < c && sky[di][dj] != -1) {
-							graph[sky[i][j]].push_back(sky[di][dj]);
-							graph[sky[di][dj]].push_back(sky[i][j]);
+				if (!visited[i][j]) {
+					q.push({ i,j });
+					visited[i][j] = true;
+					cont = 1;
+					while (!q.empty()){
+						ii star = q.front(); q.pop();
+						for (int k = 0; k < 9; k++) {
+							ii newStar = { star.first + moves[k].first,star.second + moves[k].second };
+							if (validStar(newStar) && !visited[newStar.first][newStar.second]) {
+								q.push(newStar);
+								visited[newStar.first][newStar.second] = true;
+								cont++;
+							}
 						}
 					}
+					ans += cont == 1;
 				}
-			}
-		}
-		visited = Vb(n , 0);
-		for (int i = 0; i < n; i++) {
-			if (!visited[i]) {
-				DFS(i);
-			}
-		}
-		visited = Vb(n + 1, 0);
-		int ans = 0;
-		while (!stacks.empty()) {
-			int node = stacks.top(); stacks.pop();
-			if (!visited[node]) {
-				if(RevDFS(node) == 1)
-					ans++;
 			}
 		}
 		printf("%d\n", ans);
