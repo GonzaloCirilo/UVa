@@ -9,8 +9,7 @@ typedef pair<int, int>ii;
 Gi grafo;
 Vi visited, depths;
 stack<ii>pile;
-struct MyOperator
-{//Sorting by max depth and lower number place
+struct MyOperator {//Sorting by max depth and lower number place
     bool operator() (ii const &a, ii const &b) { 
         return a.second < b.second || (!(b.second < a.second) && a.first > b.first);
     }
@@ -33,19 +32,14 @@ void DFS() {
 int main()
 {
     int n, s;
+    int u, v;
     int c = 1;
-    while (true) {
-        scanf("%d", &n);
-        if (n == 0)break;
+    while (scanf("%d", &n) && n){
         grafo = Gi(n);
         visited = Vi(n, 0);
         scanf("%d", &s);
         s--;
-        while (true) {
-            int u, v;
-            scanf("%d %d", &u, &v);
-            if (u == 0 && v == 0)
-                break;
+        while (scanf("%d %d", &u, &v) && u && v) {
             u--; v--;
             grafo[u].push_back(v);
         }
