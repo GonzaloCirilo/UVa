@@ -1,27 +1,24 @@
 #include <stdio.h>
 #include <vector>
-#include <queue>
+#include <set>
 #include <functional>
 #include <math.h>
-#include <algorithm>
 using namespace std;
 typedef pair<int, int>ii;
 typedef pair<int, ii>iii;
-vector<vector<int>> map, mapG, visited;
-const int inf = -2;
-ii s, d, dif1, dif2;
-int r, c, nrb, ar, nb, ac;
-int Manhattan(ii pos) {
-	dif2 = { pos.first - d.first,pos.second - d.second };
-	return (abs(pos.first - d.first) + abs(pos.second - d.second) + abs(dif1.first*dif2.second-dif1.second*dif2.first));
+vector<vector<int>> map, mapG, visited;// visited acts like the closed list
+ii s, d;
+int r, c, nrb, ar, nb, ac, inf = -2;
+double Manhattan(ii pos) {
+	return abs(pos.first - d.first) + abs(pos.second - d.second);
 }
-bool checkMap(int x, int y) {
-	return (x >= 0 && x < c&&y >= 0 && y < r) && map[y][x] != inf;
+bool checkMap(ii pos) {
+	return (pos.second >= 0 && pos.second < c&&pos.first>= 0 && pos.first < r) && map[pos.first][pos.second] != inf;
 }
 int main() {
 	vector<ii> moves = { { 1,0 },{ 0,1 },{ -1,0 },{ 0,-1 } };
 	while (scanf("%d %d", &r, &c) && r && c) {
-		priority_queue<iii, vector<iii>, greater<iii>>open;
+		set<iii> open;
 		map = vector<vector<int>>(r, vector<int>(c, -1));
 		mapG = vector<vector<int>>(r, vector<int>(c, 0));
 		visited = vector<vector<int>>(r, vector<int>(c, 0));
@@ -34,30 +31,30 @@ int main() {
 			}
 			nrb--;
 		}
-		scanf("%d %d", &s.second, &s.first);
-		scanf("%d %d", &d.second, &d.first);
-		dif1 = { s.first - d.first,s.second - d.second };
-		//A star
-		open.push({ Manhattan(s),{ s.first,s.second } });
-		int cont = 0;
-		while (!open.empty()) {
-			ii pos = open.top().second; int time = open.top().first; open.pop();
-			if (pos.first == d.first && pos.second == d.second)break;
+		scanf("%d %d", &s.first, &s.second);
+		scanf("%d %d", &d.first, &d.second);
+		open.insert({ 0,{ s.first,s.second } });
+		int newG, newF, newH;
+		while (!open.empty()) {// f = G + h
+			ii pos = (*open.begin()).second;
+			visited[pos.first][pos.second] = true;
+			if (pos == d) break;
+			open.erase(open.begin());
 			for (int i = 0; i < moves.size(); i++) {
-				int newx = pos.first + moves[i].first, newy = pos.second + moves[i].second;
-				if (checkMap(newx, newy)) {
-					int G = mapG[pos.second][pos.first] + 1;
-					int h = G + Manhattan({ newx,newy });
-					if ((map[newy][newx] == -1 || map[newy][newx] > h) && !visited[newy][newx]) {
-						map[newy][newx] = h - Manhattan({ newx,newy });
-						mapG[newy][newx] = G;
-						open.push({ map[newy][newx] ,{ newx,newy } });
+				ii newPos = { pos.first + moves[i].first,pos.second + moves[i].second };
+				if (checkMap(newPos)) {
+					newG = mapG[pos.first][pos.second] + 1;
+					newH = Manhattan(newPos);
+					newF = newG + newH;
+					if (!visited[newPos.first][newPos.second] && map[newPos.first][newPos.second] != inf && (map[newPos.first][newPos.second] > newF || map[newPos.first][newPos.second] == -1)) {
+						open.insert({ newF,newPos });
+						mapG[newPos.first][newPos.second] = newG;
+						map[newPos.first][newPos.second] = newF;
 					}
 				}
 			}
-			visited[pos.second][pos.first] = 1;//put an if after the if break clause too se if timer goes down
 		}
-		printf("%d\n", mapG[d.second][d.first]);
+		printf("%d\n", mapG[d.first][d.second]);
 	}
 	return 0;
 }
