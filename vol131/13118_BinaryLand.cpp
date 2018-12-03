@@ -20,7 +20,7 @@ int main() {
 	while (scanf("%d %d", &r, &c) != EOF) {
 		vector<vector<Cell>> cells;
 		vvi grid;
-		scanf("%d %d %d %d %d %d %d", &loveCell.first, &loveCell.second, &gurinCell.first, &gurinCell.second, &malonCell.first, &malonCell.second);
+		scanf("%d %d %d %d %d %d", &loveCell.first, &loveCell.second, &gurinCell.first, &gurinCell.second, &malonCell.first, &malonCell.second);
 		loveCell = { loveCell.first - 1,loveCell.second - 1 };
 		gurinCell = { gurinCell.first - 1,gurinCell.second - 1 };
 		malonCell = { malonCell.first - 1,malonCell.second - 1 };

@@ -16,7 +16,7 @@ int main() {
 	printf("         NAME                     SOUNDEX CODE\n");
 	while (scanf("%20s", &s) != EOF) {
 		int l = strlen(s);
-		char prev = s[0]; long long ans = 0;
+		char prev = s[0];
 		printf("         %-25s%c", s, s[0]); int cont = 0;
 		for (int i = 1; i < l && cont < 3; i++) {
 			if (m[prev] != m[s[i]] && m[s[i]]) {

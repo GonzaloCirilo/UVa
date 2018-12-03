@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 import java.math.*;
-
+//ref: https://math.stackexchange.com/questions/804088/probability-of-getting-k-different-coupons-in-a-set-of-s-coupons-from-an-infini
 class Main {
 	static String ReadLn(int maxLg) // utility function to read from stdin
 	{
