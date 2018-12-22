@@ -3,17 +3,10 @@
 #include <map>
 #include <algorithm>
 using namespace std;
-vector<int>pset, nele;
-void init(int n) {
-	pset = vector<int>(n);
-	nele = vector<int>(n, 1);
-	for (int i = 0; i < pset.size(); i++) {
-		pset[i] = i;
-	}
-}
+int pset[5005], nele[5005];
 int findset(int nodo) {
-	if (nodo == pset[nodo])
-		return pset[nodo];
+	if (-1 == pset[nodo])
+		return nodo;
 	return pset[nodo] = findset(pset[nodo]);
 }
 
@@ -32,19 +25,19 @@ void unionset(int a, int b) {
 int main() {
 	int c, r;
 	char c1[31], c2[31];
-	map<string, int>dict;
 	while (scanf("%d %d", &c, &r) && (c || r)) {
-		dict.clear();
+		map<string, int>dict;
 		for (int i = 0; i < c; i++) {
+			pset[i] = -1;
+			nele[i] = 1;
 			scanf("%30s", &c1);
 			dict[string(c1)] = i;
 		}
-		init(c);
 		for (int i = 0; i < r; i++) {
 			scanf("%30s %30s", &c1, &c2);
 			unionset(dict[string(c1)], dict[string(c2)]);
 		}
-		printf("%d\n", *max_element(nele.begin(), nele.end()));
+		printf("%d\n", *max_element(nele, nele+c));
 	}
 	return 0;
 }
