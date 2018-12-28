@@ -14,13 +14,15 @@ bool isSameSet(int a, int b) {
 	return findset(a) == findset(b);
 }
 
-void unionset(int a, int b) {
+int unionset(int a, int b) {
 	if (!isSameSet(a, b)) {
 		int sa = findset(a), sb = findset(b);
 		nele[sb] += nele[sa];
 		nele[sa] = 0;
 		pset[sa] = sb;
+		return nele[sb];
 	}
+	return 0;
 }
 int main() {
 	int c, r;
@@ -33,11 +35,13 @@ int main() {
 			scanf("%30s", &c1);
 			dict[string(c1)] = i;
 		}
+		int max = 1;
 		for (int i = 0; i < r; i++) {
 			scanf("%30s %30s", &c1, &c2);
-			unionset(dict[string(c1)], dict[string(c2)]);
+			int u = unionset(dict[string(c1)], dict[string(c2)]);
+			max = max < u ? u : max;
 		}
-		printf("%d\n", *max_element(nele, nele+c));
+		printf("%d\n", max);
 	}
 	return 0;
 }
