@@ -40,13 +40,34 @@ void radixSort(int y, int maxe) {
 	for (int exp = 1; maxe / exp > 0; exp *= 10)
 		countSort(y, exp);
 }
+void fastscan(int &x) {
+	bool neg = false;
+	register int c;
+	x = 0;
+	c = getchar();
+	if (c == '-')
+	{
+		neg = true;
+		c = getchar();
+	}
+	for (; (c > 47 && c < 58); c = getchar())
+		x = (x << 1) + (x << 3) + c - 48;
+	if (neg)
+		x *= -1;
+}
 int main() {
 	int n, m, u, v, w;
-	while (scanf("%d %d", &n, &m) && (n || m)) {
+	while (true) {
+		fastscan(n);
+		fastscan(m);
+		if (!n && !m) break;
+		//getchar();
 		init(n);
 		int max = 0;
 		for (int mi = 0; mi < m; mi++) {
-			scanf("%d %d %d", &u, &v, &w);
+			fastscan(u);
+			fastscan(v);
+			fastscan(w);
 			arr[mi] = { w,{ u,v } };
 			max = max < w ? w : max;
 		}
@@ -54,7 +75,7 @@ int main() {
 		int ans = 0;
 		radixSort(m, max);
 		//while (!pq.empty() && cont != n - 1) {
-		for (int mi = 0; mi < m && cont != n -1; mi++){
+		for (int mi = 0; mi < m && cont != n - 1; mi++) {
 			iii aux = arr[mi];
 			if (!isSameSet(aux.second.first, aux.second.second)) {
 				unionset(aux.second.first, aux.second.second);

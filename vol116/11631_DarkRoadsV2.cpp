@@ -41,11 +41,32 @@ void radixSort() {
 	for (int exp = 1; ndigits / exp > 0; exp *= 10)
 		countSort(exp);
 }
+void fastscan(int &x){
+	bool neg = false;
+	register int c;
+	x = 0;
+	c = getchar();
+	if (c == '-')
+	{
+		neg = true;
+		c = getchar();
+	}
+	for (; (c > 47 && c < 58); c = getchar())
+		x = (x << 1) + (x << 3) + c - 48;
+	if (neg)
+		x *= -1;
+}
 int main() {
-	while (scanf("%d %d", &m, &n) && n && m) {
+	while (true) {
+		fastscan(m);
+		fastscan(n);
+		getchar();
+		if (!n && !m)break;
 		int sumt = 0;
 		for (int i = 0; i < n; i++) {
-			scanf("%d %d %d", &x, &y, &z);
+			fastscan(x);
+			fastscan(y);
+			fastscan(z);
 			arr[i] = { z,{x,y} };
 			sumt += z;
 		}
