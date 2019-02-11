@@ -1,15 +1,30 @@
-// TestGrounds.cpp : main project file.
-
-#include "stdafx.h"
 #include <stdio.h>
 #include <math.h>
 #include <stdint.h>
+void fastscan(int64_t &x){
+	bool neg = false;
+	int64_t c;
+	x = 0;
+	c = getchar();
+	if (c == '-')
+	{
+		neg = true;
+		c = getchar();
+	}
+	for (; (c > 47 && c < 58); c = getchar())
+		x = (x << 1) + (x << 3) + c - 48;
+	if (neg)
+		x *= -1;
+}
 int main() {
 	int t;
 	int64_t e, p, r, k;
-	scanf("%d", &t);
+	scanf("%d\n", &t);
 	for (int i = 0; i<t; i++) {
-		scanf("%lld %lld %lld %lld", &e, &p, &k, &r);
+		fastscan(e);
+		fastscan(p);
+		fastscan(k);
+		fastscan(r);
 		int64_t ans;
 		if ((r > p*k &&  e > p*k) || (r == p*k && e > p*k)) {
 			ans = -1;
@@ -23,13 +38,13 @@ int main() {
 		}
 
 		int64_t ed = e - p*k, round = p*k - r;
-		//ans = (ed / round)*k + k*(ceil((double)(e-ed/round*round-p*k)/round))+ceil((double)(e - ed / round*round -round*ceil((double)(e - ed / round*round - p*k) / round))/p);
-		ans = (ed / round)*k;
+		ans = (ed / round)*k + k*(ceil((double)(e-ed/round*round-p*k)/round))+ceil((double)(e - ed / round*round -round*ceil((double)(e - ed / round*round - p*k) / round))/p);
+		/*ans = (ed / round)*k;
 		e -= ed / round*round;
 		int64_t time = ceil((double)(e - p*k) / round);
 		e -= (round)*(time);
 		ans += (k)*time;
-		ans += ceil((double)e / p);
+		ans += ceil((double)e / p);*/
 		printf("Case %d: %lld\n", i + 1, ans);
 	}
 	return 0;
