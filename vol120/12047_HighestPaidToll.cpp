@@ -8,20 +8,42 @@ typedef pair<int, ii>iii;
 typedef vector<int>Vi;
 typedef vector<ii>Vii;
 typedef vector<Vii>G;
+void fastScan(int &x) {
+	bool neg = false;
+	int c = getchar();
+	x = 0;
+	if (c == '-'){
+		neg = true;
+		c = getchar();
+	}
+	for (; (c > 47 && c < 58); c = getchar())
+		x = (x << 1) + (x << 3) + c - 48;
+	if (neg)
+		x *= -1;
+}
 int main() {
 	G graph, graph_rev;
 	int test, n, m, s, t, p;
 	Vi distances, distancet;
-	scanf("%d", &test);
+	//scanf("%d", &test);
+	fastScan(test);
 	for (int ts = 0; ts<test; ts++) {
-		scanf("%d %d %d %d %d", &n, &m, &s, &t, &p);
+		//scanf("%d %d %d %d %d", &n, &m, &s, &t, &p);
+		fastScan(n);
+		fastScan(m);
+		fastScan(s);
+		fastScan(t);
+		fastScan(p);
 		graph = G(n);
 		graph_rev = G(n);
 		s--; t--;
 		priority_queue<iii, vector<iii>, less<iii>>edges;
 		for (int i = 0; i<m; i++) {
 			int u, v, c;
-			scanf("%d %d %d", &u, &v, &c);
+			//scanf("%d %d %d", &u, &v, &c);
+			fastScan(u);
+			fastScan(v);
+			fastScan(c);
 			u--; v--;
 			graph[u].push_back({ c,v });
 			graph_rev[v].push_back({ c,u });
