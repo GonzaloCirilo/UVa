@@ -5,19 +5,42 @@ using namespace std;
 typedef pair<int, int> ii;
 typedef vector<int> vi;
 typedef vector<vi> G;
+bool fastScan(int &x) {
+	bool neg = false;
+	int c;
+	bool end = (c = getchar()) == EOF;
+	if (end)
+		return false;
+	x = 0;
+	if (c == '-'){
+		neg = true;
+		c = getchar();
+	}
+	for (; (c > 47 && c < 58); c = getchar())
+		x = (x << 1) + (x << 3) + c - 48;
+	if (neg)
+		x *= -1;
+	return true;
+}
 int main() {
 	int n, m, u, v, ppa, max;
 	G graph;
 	vi visited, weight;
 	vector<ii> posix;
-	while (scanf("%d %d", &n, &m) && n && m) {
+	while (true) {
+		fastScan(n);
+		fastScan(m);
+		if(!n && !m) break;
 		max = -2147483648;
 		graph = G(n);
 		weight = vi();
 		posix = vector<ii>();
 		visited = vi(n, 0);
 		for (int i = 0; i < m; i++) {
-			scanf("%d %d %d", &u, &v, &ppa);
+			//scanf("%d %d %d", &u, &v, &ppa);
+			fastScan(u);
+			fastScan(v);
+			fastScan(ppa);
 			max = max < ppa ? ppa : max;
 			weight.push_back(ppa);
 			posix.push_back({ u - 1,v - 1 });
