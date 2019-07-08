@@ -4,7 +4,6 @@
 #include <stack>
 using namespace std;
 char st[1002], ans[2006];
-bool bst[2006];
 int dp[2006][2006], cont;
 int len(int l, int r) {// starts from 0 to st lenght, recursive
 	if (l == r || l > r)
@@ -16,9 +15,7 @@ int len(int l, int r) {// starts from 0 to st lenght, recursive
 }
 int len() {//Iterative
 	int lenght = strlen(st);
-	bst[lenght - 1] = false;
 	for (int i = lenght - 2; i >= 0; i--) {
-		bst[i] = false;
 		for (int j = i + 1; j < lenght; j++) {
 			if (st[i] == st[j])
 				dp[i][j] = dp[i + 1][j - 1];
