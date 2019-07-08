@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string>
-#include <map>
+#include <algorithm>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 int main() {
 	int t;
@@ -9,7 +11,8 @@ int main() {
 	int aux = t;
 	while (t--) {
 		if (t != aux - 1)printf("\n");
-		map<string, int> dict;
+		unordered_map<string, int> dict;
+		vector<string> ss = vector<string>();
 		int n = 0;
 		while (true) {
 			token = getchar();
@@ -24,12 +27,14 @@ int main() {
 			}
 			if (!dict.insert({ s,1 }).second) {
 				dict[s]++;
+			}else{
+				ss.push_back(s);
 			}
 			n++;
 		}
-
-		for (auto it = dict.begin(); it != dict.end(); it++) {
-			printf("%s %.4f\n", (*it).first.c_str(), ((float)(*it).second / n) * 100);
+		sort(ss.begin(),ss.end());
+		for (auto it = ss.begin(); it != ss.end(); it++) {
+			printf("%s %.4f\n", (*it).c_str(), ((float)dict[*it] / n) * 100);
 		}
 	}
 	return 0;
