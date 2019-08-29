@@ -76,13 +76,20 @@ class Main {
 				System.out.println("0/1");
 				continue;
 			}
+			// Ans is the formula (n!/(n-k)!)*(S(m,k)/(n^m))
 			nu.num = BigInteger.ONE;
 			nu.den = BigInteger.ONE;
+			// calulating n!/(n-k)! for numerator
+			// and for den n^k
 			for (int i = 0; i < k.intValue(); i++) {
 				nu.num = nu.num.multiply((n.subtract(BigInteger.valueOf(i))));
+				System.out.print((n.subtract(BigInteger.valueOf(i))).toString());
 				nu.den = nu.den.multiply(n);
 			}
+			//Since we already have n^k and we need n^m, we multiply it by n ^ (m-k)
+			// because k cant be higher than m
 			nu.den = nu.den.multiply(n.pow(m.intValue() - k.intValue()));
+			// We just multiply by the result of S(m,k)
 			nu.num = nu.num.multiply(nu.stirlingN2(m, k));
 			if (nu.num == BigInteger.ZERO)
 				System.out.println("0/1");
