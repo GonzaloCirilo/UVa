@@ -3,6 +3,24 @@
 #include <set>
 using namespace std;
 
+bool fastScan(int &x) {
+	bool neg = false;
+	int c = getchar();
+	bool end = c == EOF;
+	if (end)
+		return false;
+	x = 0;
+	if (c == '-') {
+		neg = true;
+		c = getchar();
+	}
+	for (; (c > 47 && c < 58); c = getchar())
+		x = (x << 1) + (x << 3) + c - 48;
+	if (neg)
+		x *= -1;
+	return true;
+}
+
 int main() {
 	vector<int> primes, marked = vector<int>(1000001, 0);
 
@@ -20,10 +38,11 @@ int main() {
 	int n;
 
 	while (scanf("%d", &n) != EOF && n) {
+        printf("%d:\n", n);
         p = 2;
         while(p < n /2 + 1){
             if(!marked[p] && !marked[n - p]){
-                printf("%d = %d + %d\n", n, p, n - p);
+                printf("%d+%d\n", p, n - p);
                 break;
             }
             p++;
@@ -31,7 +50,7 @@ int main() {
         if(!marked[p] && !marked[n - p])
             continue;
         else
-            printf("Goldbach's conjecture is wrong.\n");
+            printf("NO WAY!\n");
 		
 	}
 
