@@ -35,9 +35,13 @@ int main(){
     int n, t;
     ull a, b;
     scanf("%d", &t);
+    vector<vll> cycles = vector<vll>(1001);
+    for(int i = 1; i <= 1000; i++){
+        cycles[i] = getCycle(i);
+    }
     while(t--){
         scanf("%llu %llu %d", &a, &b, &n);
-        vll c = getCycle(n);
+        vll c = cycles[n];
         ull index = squareExpMod(a, b, c.size());
         printf("%llu\n", c[index]);
     }
