@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <vector>
 #include <string.h>
 #include <math.h>
+using namespace std;
 struct BigNumber {
 	int num[10000] = {}, size = 1;
 	bool negative = false;
@@ -19,6 +21,7 @@ struct BigNumber {
 		if (aux == 0)
 			size = 1;
 	}
+	// TODO: Initializer from char array
 	BigNumber(char n[]) {
 		int cont = 0, lenght = strlen(n) - 1, digits = 1;
 		if (n[0] == '-')
@@ -154,9 +157,6 @@ struct BigNumber {
 		*this = *this - x;
 	}
 	BigNumber operator*(const BigNumber&x) {
-		if(isZero() || (x.size == 1 && x.num[0] == 0)){
-			return BigNumber(0);
-		}
 		int carry = 0;
         int max = 0;
 		BigNumber result = BigNumber(0);
@@ -185,6 +185,8 @@ struct BigNumber {
 		return result;
 	}
 	BigNumber operator/(const BigNumber&x) {
+		BigNumber res = BigNumber(0);
+
 		return BigNumber(0);
 	}
 	void pow(BigNumber x) {
@@ -201,13 +203,17 @@ struct BigNumber {
 	}
 };
 int main() {
-	int a, b, cont = 1;
-	char tokenA[255], tokenB[255];
-	BigNumber res = BigNumber(0);
-	while (fgets(tokenA, 255, stdin)) {
-		fgets(tokenB, 255, stdin);
-		res = BigNumber(tokenA) * BigNumber(tokenB);
-		res.print();
-	}
+	vector<BigNumber> arr = vector<BigNumber>();
+    arr.push_back(1);
+    arr.push_back(1);
+    
+    for(int i = 2; i <= 1000; i++){
+        arr.push_back(arr[i - 1] * BigNumber(i));
+    }
+    int n;
+    while(scanf("%d", &n) != EOF){
+        printf("%d!\n", n);
+        arr[n].print();
+    }
 	return 0;
 }
