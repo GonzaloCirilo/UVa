@@ -48,7 +48,7 @@ int main() {
 				double aux = 0;
 				for (int i = 0; i < times.size(); i++)
 					aux += pow(times[i] - mean, 2);
-				double standardev = sqrt(aux / (times.size() - 1));
+				double standardev = sqrt(aux / times.size());
 				double index = abs(3 * (mean - median) / standardev);
 				if (index >= 0.20f || times.size() < n || index != index) {
 					printf("INVALID SIMULATION\n");
