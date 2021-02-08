@@ -23,9 +23,9 @@ int bitwiseNQueens(int col, int ld, int rd, int row){ // ld has m = -1 and rd ha
         poss ^= bit;
         // (4)
         // -the first param removes a col with the xor operation. Following the example 1111 ^ 0001 = 1110
-        // -second param shift to the left after applying Xor to have 11100.The last AND 
+        // -second param shift to the left after applying Xor to have 11100.The last OR 
         //  operator corrects the bitset to 11101. the 1 after the fourth posistion wil ne discarded in step 1 of next iteration
-        // -Thir param applies a right shift after the xor leaving 0111. The AND with correctShift, which value
+        // -Thir param applies a right shift after the xor leaving 0111. The OR  with correctShift, which value
         //  is 1000 for the example, gives the value of 1111 since its at the right edge, the right
         //  diagonal doesn't blocks any zone. The ANDs in the second and third parameter serve the purpose 
         //  to block only the only diagonal position for the next iteration

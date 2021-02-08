@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <vector>
-#include <iostream>
-#include <bitset>
 using namespace std;
 typedef vector<int> vi;
 vi grid;
 int n, m, k, modBit;
 bool found;
-
 int circularRightShift(int x, unsigned int s){
     return (x >> s) | (x << m - s);
 }
@@ -17,8 +14,7 @@ int circularLeftShift(int x, unsigned int s){
 int bitExtracted(int x, int _m, int p){ // extract the bits from p to _m
     return (((1 << _m) - 1) & (x >> (p - 1)));
 }
-int gcd(int a, int b)
-{
+int gcd(int a, int b){
     if (a == 0)
        return b;
     if (b == 0)
@@ -36,7 +32,7 @@ void bitwiseNQueens(int col, int ld, int rd, int ck, int d){
     if (found || d > n || (k - ck > n - d)) return;
     if (ck == k){
         found = true;
-        for(int i = 0; i < grid.size(); i++){
+        for(int i = 0; i < grid.size(); i++){// print solution
             if(grid[i]){
                 int c = i % m;
                 int r = i / m;
@@ -52,7 +48,7 @@ void bitwiseNQueens(int col, int ld, int rd, int ck, int d){
         poss ^= bit;
         int auxInd = 0;
         int auxBit = modBit;
-        for(int i = 0; i < m; i++){
+        for(int i = 0; i < m; i++){// Align the diagonal pattern to the current evaluated position 
             if((bit >> i) & 1){
                 auxInd = i;
                 break;
@@ -60,8 +56,7 @@ void bitwiseNQueens(int col, int ld, int rd, int ck, int d){
             auxBit = bitExtracted(circularLeftShift(auxBit, 1),m,1);
         }
         auxInd = d * m + auxInd;
-        
-        
+        // Circular shift is needed since its a toroidal
         if(d < n){
             grid[auxInd] = 1;
             if(!found)
@@ -84,7 +79,7 @@ int main(){
         found = false;
         modBit = 1;
         int shift = gcd(m,n);
-        for(int i = 0; i < m - shift; i += shift){
+        for(int i = 0; i < m - shift; i += shift){// Make the pattern for diagonal moves
             modBit = bitExtracted(circularLeftShift(modBit, shift) | 1, m, 1);
         }
         bitwiseNQueens((1 << m) - 1, (1 << m) - 1, (1 << m) - 1, 0, 0);
