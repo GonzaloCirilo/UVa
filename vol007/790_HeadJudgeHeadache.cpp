@@ -128,15 +128,11 @@ int main(){
             if(!(i != 0 && teams[i].solved == teams[i-1].solved && teams[i].time == teams[i-1].time)){
                 auxPlace = i;
             }
-            printf("%*d", 4, auxPlace + 1);
-            printf("%*d", 5, teams[i].id);
-            printf("%*d", 5, teams[i].solved);
-            printf("%*d\n", 11, teams[i].time);
+            printf("%4d%5d%5d%11d\n", auxPlace + 1, teams[i].id, teams[i].solved, teams[i].time);
             participants.erase(teams[i].id);
         }
         for(auto it = participants.begin(); it != participants.end(); it++){
-            printf("%*d", 4, maxTeamId - participants.size() + 1);
-            printf("%*d\n", 5, *it);
+            printf("%4d%5d\n", maxTeamId - participants.size() + 1, *it);
         }       
     }
 
