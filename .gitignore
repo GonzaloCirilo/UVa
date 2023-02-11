@@ -1,4 +1,5 @@
 .vscode/
+.fleet/
 *.out
 *.exe
 in.txt
