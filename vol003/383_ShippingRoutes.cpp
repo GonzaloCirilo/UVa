@@ -8,7 +8,7 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector<vi> graph;
 int main() {
- 	printf("SHIPPING ROUTES OUTPUT\n");
+    printf("SHIPPING ROUTES OUTPUT\n");
     int t, m, n, p;
     scanf("%d\n", &t);
 
