@@ -26,7 +26,7 @@ int main() {
             string token, token2;
             cin >> token >> token2;
             int u = dict[token], v = dict[token2];
-			g[u].push_back(v);
+	    g[u].push_back(v);
             g[v].push_back(u);
         }
 
@@ -41,9 +41,9 @@ int main() {
             visited[u] = 1;
             q.push(u);
             while(!q.empty()) {
-				auto node = q.front(); q.pop();
+		auto node = q.front(); q.pop();
                 for (int k = 0; k < g[node].size(); k++) {
-					int adj = g[node][k];
+		    int adj = g[node][k];
                     if (visited[adj] == 0) {
                         visited[adj] = visited[node] + 1;
                         q.push(adj);
