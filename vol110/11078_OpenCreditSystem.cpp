@@ -8,14 +8,17 @@ int main() {
     scanf("%d", &t);
     while (t--) {
         scanf("%d", &n);
+        vector<int> arr = vector<int>();
         int x;
-        int ans = -1e9;
-        int currentMax;
-        scanf("%d", &currentMax);
-        for(int i = 1; i < n; i++) {
+        for(int i = 0; i < n; i++) {
             scanf("%d", &x);
-            ans = max(ans, currentMax-x);
-            currentMax = max(currentMax, x);
+            arr.push_back(x);
+        }
+        int ans = -1e9;
+        int currentMax = arr[0];
+        for (int i = 1; i < n; i++) {
+            ans = max(ans, currentMax-arr[i]);
+            currentMax = max(currentMax, arr[i]);
         }
         printf("%d\n", ans);
         
